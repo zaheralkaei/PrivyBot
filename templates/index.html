@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PrivyBot – Local Chatbot</title>
+    <script src="/static/app.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-1/4 bg-white border-r shadow p-3 h-screen overflow-y-auto">
+            <h2 class="text-lg font-bold mb-2">Chats</h2>
+            <button onclick="toggleAbout()" class="w-full bg-gray-300 text-black py-1 px-2 mb-3 rounded">ℹ️ About</button>
+            <ul id="chat-list" class="mb-4 space-y-1"></ul>
+            <button onclick="newChat()" class="w-full bg-green-500 text-white py-2 px-3 rounded">+ New Chat</button>
+        
+            <label class="block text-sm font-medium mb-1">📄 Load PDF:</label>
+            <input type="file" id="pdf-upload" class="mb-4 block w-full text-sm text-gray-600 border border-gray-300 rounded p-2 bg-white" accept=".pdf" onchange="uploadPDF()" />
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="w-3/4 max-w-3xl mx-auto bg-white shadow-lg rounded p-4 h-screen overflow-y-auto flex flex-col">
+            <h1 class="text-2xl font-bold mb-4">🤖 PrivyBot – Your Local Chatbot</h1>
+            <div>
+                <label for="model">Model:</label>
+                <select id="model" class="border p-2 rounded mb-4 w-full"></select>
+            </div>
+            <div id="chat-box" class="flex-grow border p-3 mb-4 bg-gray-50 rounded overflow-y-auto"></div>
+            
+            <div class="flex items-center justify-between mb-2">
+                <label class="flex items-center space-x-2 text-sm text-gray-700">
+                    <input type="checkbox" id="web-toggle" onchange="toggleWebSearch()" class="form-checkbox">
+                        <span>🌐 Enable Web Search</span>
+                </label>
+            </div>
+
+            
+            
+            <div class="flex items-center gap-2">
+                <input id="user-input" type="text" class="flex-grow border p-2 rounded" placeholder="Type a message..." onkeydown="checkEnter(event)" />
+                <button onclick="sendMessage()" class="bg-blue-500 text-white px-4 py-2 rounded">Send</button>
+            </div>
+            <p id="loading" class="text-sm text-gray-500 mt-2 hidden">Bot is thinking <span class="animate-spin">⏳</span></p>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full text-center">
+            <h2 class="text-xl font-bold mb-4">About This Chatbot</h2>
+            <p class="mb-4">
+                <strong>PrivyBot</strong> is your private, local AI chatbot powered by Ollama and LangChain.<br>
+                All conversations are stored securely on your device — nothing is sent to external servers.<br><br>
+                You can optionally:
+                <ul>
+                <li>🌐 <strong>Enable web search</strong> to fetch up-to-date information from the internet (via DuckDuckGo).</li>
+                <li>📄 <strong>Upload a PDF</strong> and ask questions about its content — perfect for articles, papers, and manuals.</li>
+                </ul>
+            </p>
+            <button onclick="toggleAbout()" class="bg-blue-500 text-white px-4 py-2 rounded">Close</button>
+        </div>
+    </div>
+</body>
+</html>
